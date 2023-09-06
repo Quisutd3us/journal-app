@@ -53,8 +53,6 @@ export const LoginPage = () => {
             </Grid>
           </form>
       </AuthLayout>
-         
-        
     </>
   );
 };
