@@ -10,10 +10,10 @@ export const JournalLayout = ({ children }) => {
         {/* navbar */}
         <NavBar drawerWidth={drawerWidth} />
         {/* Sidebar */}
-        <SideBar drawerWidth={drawerWidth}/>
+        <SideBar drawerWidth={drawerWidth} />
         <Box
           component={'main'}
-          sx={{ flexGrow: 1, p: 3 }}
+          sx={{ flexGrow: 1, p: 3 , mt:5}}
         >
           {children}
         </Box>
