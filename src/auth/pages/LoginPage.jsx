@@ -1,5 +1,5 @@
 // library imports
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 
 // ui imports
@@ -9,9 +9,14 @@ import { AuthLayout } from '../layout/AuthLayout';
 
 import { useForm } from "../../hooks/index.js";
 import { checkingAuthentication, startGoogleSignIn } from '../../store/auth';
+import { useMemo } from 'react';
 
 export const LoginPage = () => {
-  const dispatch =useDispatch();
+  const { status } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const isAuthenticating = useMemo(() =>  status === 'checking' , [status]);
+  console.log(isAuthenticating)
 
   const { email, password, onInputChange } = useForm({
     email: "dnarino@gmail.com",
@@ -62,6 +67,7 @@ export const LoginPage = () => {
             <Grid container spacing={2} sx={{ m: 2 }}>
               <Grid item xs={12} sm={6}>
                 <Button
+                  disabled={isAuthenticating}
                   type='submit'
                   onSubmit={handleOnSubmit}
                   variant="contained"
@@ -71,6 +77,7 @@ export const LoginPage = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
+                  disabled={isAuthenticating}
                   onClick={onGoogleSignIn}
                   variant="contained"
                   fullWidth>
