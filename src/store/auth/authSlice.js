@@ -1,25 +1,26 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-  state: 'checking', // 'not-authenticated' , 'authenticated
+  status: 'not-authenticated', // 'checking' , 'authenticated
   uid: null,
   email: null,
   displayName: null,
   photoURL: null,
   errorMessage: null
 }
-
-export const counterSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: () => {},
-    logOut: () => {},
-    checkingCredentials: () => {}
+    login: () => {
+    },
+    logOut: () => {
+    },
+    checkingCredentials: (state, payload) => {
+      state.status = 'checking';
+      console.log(payload)
+    }
   },
 })
 
-export const {
-  login,
-  logOut,
-  checkingCredentials} = counterSlice.actions
+export const {login, logOut, checkingCredentials} = authSlice.actions
