@@ -17,7 +17,8 @@ export const authSlice = createSlice({
       state.uid = payload.uid;
       state.email = payload.email;
       state.displayName = payload.displayName;
-      state.photoURL = payload.photoUR;
+      state.photoURL = payload.photoURL;
+      state.errorMessage = null
     },
     logOut: (state, { payload }) => {
       state.status = 'not-authenticated';

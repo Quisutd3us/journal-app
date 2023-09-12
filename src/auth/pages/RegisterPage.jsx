@@ -1,8 +1,9 @@
+import { useMemo, useState } from 'react';
 // libraries imports
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 // MUI libraries
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { Edit } from "@mui/icons-material";
 
@@ -34,15 +35,21 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
+  const {status,errorMessage} = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
-  const { displayName, email, password, formState, onInputChange,validForm, displayNameValid, emailValid, passwordValid
+  const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
+
+  const [formSubmited , setFormSubmited] = useState(false);
+
+  const { displayName, email, password, formState, onInputChange, validForm, displayNameValid, emailValid, passwordValid
   } = useForm(initialForm, formValidations);
 
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if(!validForm) return;
+    setFormSubmited(true);
+    if (!validForm) return;
     dispatch(startUserWithEmailPassword(formState));
   };
 
@@ -97,10 +104,20 @@ export const RegisterPage = () => {
                 helperText={passwordValid}
               />
             </Grid>
+
+            {/* Error message Section */}
+
+            <Grid container sx={errorMessage? {display:'flex',mt:2}:{display:'none'}}>
+              <Grid item xs={12} >
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+            </Grid>
+
             {/* submit button */}
-            <Grid container spacing={2} sx={{ m: 2 }}>
+            <Grid container spacing={2} sx={{ my: 2 }}>
               <Grid item xs={12} >
                 <Button
+                  disabled={isCheckingAuthentication}
                   type='submit'
                   variant="contained"
                   fullWidth>
