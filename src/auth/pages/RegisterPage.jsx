@@ -10,13 +10,21 @@ const initialForm = {
   password: 'ABC1234'
 };
 
+const formValidations = {
+  displayName: [(value) => value.lenght >= 6, 'The Name must have more than 6 characters'],
+  email: [(value) => value.includes('@'), 'The email value must be have the @ character'],
+  password: [(value) => value.lenght >= 6, 'The password must be have the @ character']
+};
+
 export const RegisterPage = () => {
-  const { displayName, email, password, onInputChange, formState } = useForm(initialForm);
+  const { displayName, email, password, onInputChange, formState,
+    isValidForm, isValidDisplayName, isValidEmail, isValidPassword
+  } = useForm(initialForm,formValidations);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
     console.log('first')
-    console.log( formState )
+    console.log(formState)
   };
 
   return (
@@ -37,6 +45,9 @@ export const RegisterPage = () => {
                 name={'displayName'}
                 value={displayName}
                 onChange={onInputChange}
+                // manage Form errors
+                error={!isValidDisplayName}
+                helperText={isValidDisplayName}
               />
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -48,6 +59,9 @@ export const RegisterPage = () => {
                 name={'email'}
                 value={email}
                 onChange={onInputChange}
+                // manage Form errors
+                error={!isValidEmail}
+                helperText={isValidEmail}
               />
             </Grid>
 
@@ -59,6 +73,9 @@ export const RegisterPage = () => {
                 name={'password'}
                 value={password}
                 onChange={onInputChange}
+                // manage Form errors
+                error={!isValidPassword}
+                helperText={isValidPassword}
               />
             </Grid>
             {/* submit button */}
