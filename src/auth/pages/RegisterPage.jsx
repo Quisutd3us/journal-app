@@ -10,10 +10,20 @@ const initialForm = {
   password: 'ABC1234'
 };
 
+
 const formValidations = {
-  displayName: [(value) => value.length >= 1, 'The Name is Required'],
-  email: [(value) => value.includes('@'), 'The email value must be have the @ character'],
-  password: [(value) => value.length >= 6, 'The password must be have more than 6 characters']
+  displayName: [(value) => {
+    const regex = /^[a-zA-Z0-9_ ]{1,20}$/;
+    return regex.test(value);
+  }, 'The Name must have 1 to 20 characters '],
+  email: [(value) => {
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    return regex.test(value);
+  }, 'The email value must have the @ character'],
+  password: [(value) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/;
+    return regex.test(value);
+  }, 'Minimum eight characters, at least one letter, one number and one special character [$!%*#?&_]']
 };
 
 export const RegisterPage = () => {
@@ -21,7 +31,6 @@ export const RegisterPage = () => {
     validForm, displayNameValid, emailValid, passwordValid
   } = useForm(initialForm,formValidations);
 
-  console.log(validForm)
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
