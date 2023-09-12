@@ -34,8 +34,8 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     const resultValidation = {};
     for (const nameValidation of Object.keys(formValidations)) {
       const [fn, errorValidation] = formValidations[nameValidation]
-      console.log(formState[nameValidation])
-      console.log(fn(formState[nameValidation]))
+      // console.log(formState[nameValidation])
+      // console.log(fn(formState[nameValidation]))
       resultValidation[`${nameValidation}Valid`] = fn(formState[nameValidation]) ? null : errorValidation
     }
     setFormValidation(resultValidation)

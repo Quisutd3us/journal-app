@@ -1,8 +1,13 @@
+// libraries imports
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
+// MUI libraries
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { Edit } from "@mui/icons-material";
+
 import { useForm } from '../../hooks';
+import { startUserWithEmailPassword } from '../../store/auth/thunks';
 
 const initialForm = {
   displayName: 'David Doe',
@@ -21,19 +26,24 @@ const formValidations = {
     return regex.test(value);
   }, 'The email value must have the @ character'],
   password: [(value) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/;
+    // const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/;
+    const regex = /[A-Za-z\d]{3,}/;
     return regex.test(value);
   }, 'Minimum eight characters, at least one letter, one number and one special character [$!%*#?&_]']
 };
 
 export const RegisterPage = () => {
-  const { displayName, email, password, onInputChange,
-    validForm, displayNameValid, emailValid, passwordValid
-  } = useForm(initialForm,formValidations);
+
+  const dispatch = useDispatch();
+
+  const { displayName, email, password, formState, onInputChange,validForm, displayNameValid, emailValid, passwordValid
+  } = useForm(initialForm, formValidations);
 
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    if(!validForm) return;
+    dispatch(startUserWithEmailPassword(formState));
   };
 
   return (

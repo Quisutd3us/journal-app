@@ -1,6 +1,5 @@
-
-import { signInWithGoogle } from "../../firebase/providers";
-import {  checkingCredentials, logOut, login } from "./authSlice";
+import {registerUserWithEmailPassword, signInWithGoogle} from "../../firebase/providers";
+import {checkingCredentials, logOut, login} from "./authSlice";
 
 
 export const checkingAuthentication = () => {
@@ -14,7 +13,17 @@ export const startGoogleSignIn = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials());
     const result = await signInWithGoogle();
-    if(!result.ok ) return dispatch(logOut(result));
+    if (!result.ok) return dispatch(logOut(result));
+    dispatch(login(result));
+  };
+};
+
+export const startUserWithEmailPassword = ({email, password, displayName}) => {
+  return async (dispatch) => {
+    dispatch(checkingCredentials());
+    const result = await registerUserWithEmailPassword({email, password, displayName});
+    if (!result.ok) return dispatch(logOut(result));
+    console.log(result)
     dispatch(login(result));
   };
 };
