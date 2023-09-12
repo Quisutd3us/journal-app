@@ -11,20 +11,20 @@ const initialForm = {
 };
 
 const formValidations = {
-  displayName: [(value) => value.lenght >= 6, 'The Name must have more than 6 characters'],
+  displayName: [(value) => value.length >= 1, 'The Name is Required'],
   email: [(value) => value.includes('@'), 'The email value must be have the @ character'],
-  password: [(value) => value.lenght >= 6, 'The password must be have the @ character']
+  password: [(value) => value.length >= 6, 'The password must be have more than 6 characters']
 };
 
 export const RegisterPage = () => {
-  const { displayName, email, password, onInputChange, formState,
-    isValidForm, isValidDisplayName, isValidEmail, isValidPassword
+  const { displayName, email, password, onInputChange,
+    validForm, displayNameValid, emailValid, passwordValid
   } = useForm(initialForm,formValidations);
+
+  console.log(validForm)
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log('first')
-    console.log(formState)
   };
 
   return (
@@ -46,8 +46,8 @@ export const RegisterPage = () => {
                 value={displayName}
                 onChange={onInputChange}
                 // manage Form errors
-                error={!isValidDisplayName}
-                helperText={isValidDisplayName}
+                error={!!displayNameValid}
+                helperText={displayNameValid}
               />
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -60,8 +60,8 @@ export const RegisterPage = () => {
                 value={email}
                 onChange={onInputChange}
                 // manage Form errors
-                error={!isValidEmail}
-                helperText={isValidEmail}
+                error={!!emailValid}
+                helperText={emailValid}
               />
             </Grid>
 
@@ -74,8 +74,8 @@ export const RegisterPage = () => {
                 value={password}
                 onChange={onInputChange}
                 // manage Form errors
-                error={!isValidPassword}
-                helperText={isValidPassword}
+                error={!!passwordValid}
+                helperText={passwordValid}
               />
             </Grid>
             {/* submit button */}
