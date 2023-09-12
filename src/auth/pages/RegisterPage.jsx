@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 // libraries imports
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -35,12 +35,10 @@ const formValidations = {
 
 export const RegisterPage = () => {
 
-  const {status,errorMessage} = useSelector(state => state.auth);
+  const { status, errorMessage } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
-
-  const [formSubmited , setFormSubmited] = useState(false);
 
   const { displayName, email, password, formState, onInputChange, validForm, displayNameValid, emailValid, passwordValid
   } = useForm(initialForm, formValidations);
@@ -48,7 +46,6 @@ export const RegisterPage = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    setFormSubmited(true);
     if (!validForm) return;
     dispatch(startUserWithEmailPassword(formState));
   };
@@ -107,7 +104,7 @@ export const RegisterPage = () => {
 
             {/* Error message Section */}
 
-            <Grid container sx={errorMessage? {display:'flex',mt:2}:{display:'none'}}>
+            <Grid container sx={errorMessage ? { display: 'flex', mt: 2 } : { display: 'none' }}>
               <Grid item xs={12} >
                 <Alert severity="error">{errorMessage}</Alert>
               </Grid>
