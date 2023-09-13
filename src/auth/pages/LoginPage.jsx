@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 // ui imports
 import { Google } from "@mui/icons-material";
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import { Alert, Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { AuthLayout } from '../layout/AuthLayout';
 
 import { useForm } from "../../hooks/index.js";
@@ -31,18 +31,18 @@ const formValidations = {
 
 
 export const LoginPage = () => {
-  const { status } = useSelector(state => state.auth);
+  const { status, errorMessage } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
-  const isAuthenticating = useMemo(() =>  status === 'checking' , [status]);
- 
-  const { email, password,formState, onInputChange ,validForm,emailValid,passwordValid
-  
-  } = useForm(initialForm,formValidations)
+  const isAuthenticating = useMemo(() => status === 'checking', [status]);
+
+  const { email, password, formState, onInputChange, validForm, emailValid, passwordValid
+
+  } = useForm(initialForm, formValidations)
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    if(!validForm) return;
+    if (!validForm) return;
     dispatch(startLoginWithEmailPassword(formState));
   }
 
@@ -88,10 +88,21 @@ export const LoginPage = () => {
                 helperText={passwordValid}
               />
             </Grid>
+            {/* message error section */}
+            <Grid 
+            container
+            display={errorMessage? '' : 'none'}
+            >
+              <Grid item xs={12} sx={{mt:2}}>
+              <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+            </Grid>
+
+            {/* acion buttons */}
             <Grid container spacing={2} sx={{ m: 2 }}>
               <Grid item xs={12} sm={6}>
                 <Button
-                  // disabled={isAuthenticating}
+                  disabled={isAuthenticating}
                   type='submit'
                   onSubmit={handleOnSubmit}
                   variant="contained"
@@ -101,7 +112,7 @@ export const LoginPage = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Button
-                  // disabled={isAuthenticating}
+                  disabled={isAuthenticating}
                   onClick={onGoogleSignIn}
                   variant="contained"
                   fullWidth>
