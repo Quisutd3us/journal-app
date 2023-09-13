@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 // library imports
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
@@ -9,12 +10,11 @@ import { AuthLayout } from '../layout/AuthLayout';
 
 import { useForm } from "../../hooks/index.js";
 import { startGoogleSignIn, startLoginWithEmailPassword } from '../../store/auth';
-import { useMemo } from 'react';
 
 
 const initialForm = {
-  email: 'dnarino@gmail.com',
-  password: 'ABC1234'
+  email: '',
+  password: ''
 };
 
 const formValidations = {
@@ -33,7 +33,7 @@ const formValidations = {
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector(state => state.auth);
   const dispatch = useDispatch();
-
+  const [isSubmit, setIsSubmit] = useState(false);
   const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
   const { email, password, formState, onInputChange, validForm, emailValid, passwordValid
@@ -42,6 +42,7 @@ export const LoginPage = () => {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    setIsSubmit(true);
     if (!validForm) return;
     dispatch(startLoginWithEmailPassword(formState));
   }
@@ -71,8 +72,8 @@ export const LoginPage = () => {
                 value={email}
                 onChange={onInputChange}
                 // manage errors
-                error={!!emailValid}
-                helperText={emailValid}
+                error={!!emailValid && isSubmit}
+                helperText={emailValid && isSubmit}
               />
             </Grid>
             <Grid item xs={12} sx={{ mt: 2 }}>
@@ -84,8 +85,8 @@ export const LoginPage = () => {
                 value={password}
                 onChange={onInputChange}
                 // manage errors
-                error={!!passwordValid}
-                helperText={passwordValid}
+                error={!!passwordValid && isSubmit}
+                helperText={passwordValid && isSubmit}
               />
             </Grid>
             {/* message error section */}
