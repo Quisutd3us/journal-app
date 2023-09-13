@@ -89,12 +89,12 @@ export const LoginPage = () => {
               />
             </Grid>
             {/* message error section */}
-            <Grid 
-            container
-            display={errorMessage? '' : 'none'}
+            <Grid
+              container
+              display={errorMessage ? '' : 'none'}
             >
-              <Grid item xs={12} sx={{mt:2}}>
-              <Alert severity="error">{errorMessage}</Alert>
+              <Grid item xs={12} sx={{ mt: 2 }}>
+                <Alert severity="error">{errorMessage}</Alert>
               </Grid>
             </Grid>
 
