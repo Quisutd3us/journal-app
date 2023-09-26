@@ -13,10 +13,13 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     return true;
   }, [formValidation])
 
-
   useEffect(() => {
     acrossFormValidations();
   }, [formState]);
+
+  useEffect(()=>{
+    setFormState(initialForm);
+  },[initialForm]);
 
   const onInputChange = ({target}) => {
     const {name, value} = target;

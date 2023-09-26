@@ -1,2 +1,2 @@
-export * from './useForm.js';
+export * from './useForm';
 export * from './useCheckAuth.js';

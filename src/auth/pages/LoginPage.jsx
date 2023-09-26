@@ -36,8 +36,14 @@ export const LoginPage = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
-  const { email, password, formState, onInputChange, validForm, emailValid, passwordValid
-
+  const { 
+    email, 
+    password, 
+    formState, 
+    onInputChange, 
+    validForm, 
+    emailValid, 
+    passwordValid
   } = useForm(initialForm, formValidations)
 
   const handleOnSubmit = (e) => {
@@ -45,7 +51,7 @@ export const LoginPage = () => {
     setIsSubmit(true);
     if (!validForm) return;
     dispatch(startLoginWithEmailPassword(formState));
-  }
+  };
 
   const onGoogleSignIn = (e) => {
     e.preventDefault();
