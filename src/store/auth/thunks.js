@@ -1,11 +1,16 @@
-import { loginUserWithEmailPassword, registerUserWithEmailPassword, signInWithGoogle, signOutUserWithEmailPassword } from "../../firebase/providers";
-import { checkingCredentials, logOut, login } from "./authSlice";
+import {
+  loginUserWithEmailPassword,
+  registerUserWithEmailPassword,
+  signInWithGoogle, 
+  signOutUserWithEmailPassword
+} from '../../firebase/providers';
+import { clearNotesLogOut } from '../journal/journalSlice';
+import { checkingCredentials, logOut, login } from './authSlice';
 
 
 export const checkingAuthentication = () => {
   return async (dispatch) => {
     dispatch(checkingCredentials());
-
   };
 };
 
@@ -26,17 +31,16 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
     if (!result.ok) return dispatch(logOut(result));
     dispatch(login(result));
   };
-
-}
+};
 
 export const logOutUserWithEmailPassword = () => {
   return async (dispatch) => {
-    const result={
+    const result = {
       errorMessage: null
     }
     await signOutUserWithEmailPassword();
-    dispatch(logOut(result))
-
+    dispatch(clearNotesLogOut());
+    dispatch(logOut(result));
   };
 };
 
