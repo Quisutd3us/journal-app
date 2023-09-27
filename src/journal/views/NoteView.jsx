@@ -14,7 +14,7 @@ import { setActiveNote, startDeleteNote, startSaveNote, startUploadingFiles } fr
 
 export const NoteView = () => {
   const dispatch = useDispatch()
-  const { activeNote, messageSaved, isSaving } = useSelector(state => state.journal);
+  const { activeNote, messagesActions, isSaving } = useSelector(state => state.journal);
   const { title, body, date, onInputChange, formState } = useForm(activeNote);
   const fileInputRef = useRef();
 
@@ -28,10 +28,17 @@ export const NoteView = () => {
   }, [formState])
 
   useEffect(() => {
-    if (messageSaved.length > 0) {
-      Swal.fire('Update Note', messageSaved, 'success');
+    if (Object.keys(messagesActions).length > 0) {
+      if (messagesActions.type === 'update') {
+        console.log('updated')
+        Swal.fire('Update Note', messagesActions.message, 'success');
+      }
+      else{
+        console.log('deleted')
+        Swal.fire('Deleted Note', messagesActions.message, 'success');
+      }
     }
-  }, [messageSaved])
+  }, [messagesActions])
 
   // Save Note
   const onSaveNote = () => {
