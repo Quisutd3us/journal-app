@@ -141,6 +141,7 @@ export const NoteView = () => {
         >
           {/* Delete button */}
           <Button
+            disabled={isSaving}
             onClick={() => onDeleteNote(activeNote.id)}
             variant="outlined" >
             <DeleteOutlined sx={{ fontSize: 30, mr: 1 }} />

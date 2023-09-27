@@ -83,7 +83,6 @@ export const startDeleteNote = (id) => {
 
     dispatch(setSaving());
 
-    // /SsImSVb2oGYzAtk7wkS6U0wOlBX2/journal/notes/ytVQ5IdMKkK8X6jyz1Ju
     const { uid } = getState().auth;
     const docUrl = `${uid}/journal/notes/${id}`;
 
