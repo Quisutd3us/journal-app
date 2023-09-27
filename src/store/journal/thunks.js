@@ -22,6 +22,7 @@ export const startNewNote = () => {
     const newNote = {
       title: '',
       body: '',
+      imageUrls: [],
       date: new Date().getTime(),
     }
 
@@ -88,7 +89,7 @@ export const startDeleteNote = (id) => {
 
     const docRef = doc(FirebaseDB, docUrl);
     const result = await deleteDoc(docRef);
-    if(result) throw new Error('Error on delete Note');
+    if (result) throw new Error('Error on delete Note');
 
     dispatch(deleteNote(id));
   }
