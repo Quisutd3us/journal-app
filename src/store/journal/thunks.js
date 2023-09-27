@@ -68,7 +68,7 @@ export const startUploadingFiles = (files = []) => {
     dispatch(setSaving());
     const fileUploadPromises = [];
     for (const file of files) {
-      fileUploadPromises.push(fileupload(file));
+      fileUploadPromises.push(fileupload(file)); 
     }
     const photoUrls = await Promise.all(fileUploadPromises)
 

@@ -46,15 +46,13 @@ export const NoteView = () => {
 
   return (
     <>
+       {/* upload Images and Save Note Buttons */}
       <Grid
         container
         direction={'row'}
-        justifyContent={'space-between'}
+        justifyContent={'end'}
         alignItems={'center'}
         sx={{ my: 1 }}>
-        <Grid item>
-          <Typography fontSize={25} fontWeight={'light'}>{dateString}</Typography>
-        </Grid>
         <Grid item>
           {/* input file input */}
           <input
@@ -83,7 +81,18 @@ export const NoteView = () => {
           </Button>
         </Grid>
       </Grid>
-
+      {/* note creation date */}
+      <Grid
+        container
+        direction={'row'}
+        justifyContent={'start'}
+        alignItems={'center'}
+        sx={{ my: 1 }}>
+        <Grid item>
+          <Typography fontSize={25} fontWeight={'light'}>{dateString}</Typography>
+        </Grid>
+      </Grid>
+      {/* Title and Body Note Fields */}
       <Grid
         container
         sx={{ my: 2 }}
@@ -112,6 +121,8 @@ export const NoteView = () => {
           onChange={onInputChange}
         />
       </Grid>
+
+      
       <ImageGallery />
 
     </>
